@@ -3,6 +3,7 @@ import throttle from 'lodash.throttle';
 
 const iframe = document.querySelector('iframe');
 const player = new Player(iframe);
+
 const updateTime = pausedTime =>
   localStorage.setItem('videoplayer-current-time', pausedTime.seconds);
 

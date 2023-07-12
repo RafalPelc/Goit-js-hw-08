@@ -32,13 +32,13 @@ window.addEventListener('load', () => {
     console.error('Error reading from localStorage:', error);
   }
 });
+
 const sumbitForm = event => {
   event.preventDefault();
   console.log(getFeedback());
   emailInput.value = '';
   messageInput.value = '';
   localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(getFeedback()));
-  // console.log(getFeedback());
 };
 
 form.addEventListener('input', throttle(saveToLocalStorage, 500));
