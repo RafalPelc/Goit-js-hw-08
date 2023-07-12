@@ -1,45 +1,40 @@
-import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
-console.log(SimpleLightbox);
+import SimpleLightbox from 'simplelightbox';
 
+// Add imports above this line
 import { galleryItems } from './gallery-items';
-
+// Change code below this line
 const gallery = document.querySelector('.gallery');
+galleryItems.forEach(el => {
+  const li = document.createElement('li');
+  const a = document.createElement('a');
+  const img = document.createElement('img');
 
-createGalleryItems();
+  a.classList.add('gallery__link');
+  img.classList.add('gallery__image');
 
-function createGalleryItems() {
-  for (const galleryItem of galleryItems) {
-    const galleryLi = document.createElement('li');
-    galleryLi.classList.add('gallery__li');
-    gallery.append(galleryLi);
+  gallery.append(li);
+  li.append(a);
+  a.append(img);
 
-    const galleryLink = document.createElement('a');
-    galleryLink.classList.add('gallery__item');
-    galleryLink.href = galleryItem.original;
-    galleryLi.append(galleryLink);
-
-    const galleryImage = document.createElement('img');
-    galleryImage.classList.add('gallery__image');
-    galleryImage.src = galleryItem.preview;
-    galleryImage.alt = galleryItem.description;
-    galleryImage.dataset.source = galleryItem.original;
-    galleryLink.append(galleryImage);
-  }
-}
-
-new SimpleLightbox('.gallery a', {
+  a.href = el.original;
+  img.src = el.preview;
+  img.alt = el.description;
+});
+let lightbox = new SimpleLightbox('.gallery a', {
   captionsData: 'alt',
   captionDelay: 250,
+  captionType: Text,
   scrollZoom: false,
 });
 
-const openImage = event => {
+const selectImage = event => {
   event.preventDefault();
   if (event.target.nodeName !== 'IMG') {
     return;
   }
+  lightbox.open(event.target);
 };
+gallery.addEventListener('click', selectImage);
 
-gallery.addEventListener('click', openImage);
 console.log(galleryItems);
